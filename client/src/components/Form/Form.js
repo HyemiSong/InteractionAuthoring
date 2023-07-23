@@ -65,7 +65,7 @@ const Form = ({ currentId, setCurrentId }) => {
   return (
     <Paper className={classes.paper}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-            <Typography variant="h6">{currentId ? `Editing "${post.title}"` : 'Creating a Memory'}</Typography>
+            <Typography variant="h6">{currentId ? `Editing ${post.creator}'s post` : 'Adding an example'}</Typography>
 
             {/* intent */}
             <FormControl variant="outlined" fullWidth>
@@ -111,7 +111,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <div className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} /></div>
         {/* submit/clear */}
         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth disabled={isSubmitDisabled}>Submit</Button>
-        <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+        <Button variant="contained" style={{backgroundColor: '#000', color: '#fff'}} size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
   );

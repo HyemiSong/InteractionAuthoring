@@ -20,8 +20,9 @@ const App = () => {
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">Memories</Typography>
-        <img className={classes.image} src={memories} alt="icon" height="60" />
+        <Typography className={classes.heading} variant="h5" align="center">
+          Intents, Techniques, and Components: a Unified Analysis of Interaction Authoring Tasks in Data Visualization
+        </Typography>
       </AppBar>
       <Grow in>
         <Container>
