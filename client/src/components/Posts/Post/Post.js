@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core/';
+import { Link } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -23,13 +24,23 @@ const Post = ({ post, setCurrentId }) => {
       <div className={classes.overlay2}>
         <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}><MoreHorizIcon fontSize="medium" /></Button>
       </div>
+      {/* framework */}
+      <CardContent>
+        <Typography className={classes.intent} gutterBottom variant="body2" component="h2">{post.intent}</Typography>
+        <Typography className={classes.technique} gutterBottom variant="body2" component="h2">{post.technique}</Typography>
+        <Typography className={classes.component} gutterBottom variant="body2" component="h2">{post.component}</Typography>
+        {/* message */}
+        <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+        {/* website */}
+        <Typography variant="body2" color="textSecondary" component="p"><Link href={post.uri} target='_blank'>{post.uri}</Link></Typography>
+        <Typography variant="body2" color="textSecondary" component="p">{post.creator}</Typography>
+      </CardContent>
+
+      {/* tags */}
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
       </div>
-      <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
-      </CardContent>
+
       <CardActions className={classes.cardActions}>
         {/* <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button> */}
         <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}><DeleteIcon fontSize="small" /> Delete</Button>
