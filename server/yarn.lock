@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@cloudtype/cli@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@cloudtype/cli/-/cli-0.7.1.tgz#7acb10350d79a89499df0e0184f37b9ab69b6b7b"
+  integrity sha512-0EoGrvdLVGp+VZmpYtCFFBc8mTl7XpF3/NXUQvGt5HXJhxXZQt/kkh//Wuej9Vzm2tToHe4o6foHQzdhi/Je7A==
+
 "@types/node@*":
   version "20.4.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.1.tgz#a6033a8718653c50ac4962977e14d0f984d9527d"
@@ -205,6 +210,11 @@ destroy@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.2.0.tgz#4803735509ad8be552934c67df614f94e66fa015"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
+
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
 
 ee-first@1.1.1:
   version "1.1.1"
