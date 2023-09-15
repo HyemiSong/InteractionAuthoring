@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    padding: 40
   },
   fileInput: {
     width: '97%',
@@ -22,4 +23,8 @@ export default makeStyles((theme) => ({
   buttonSubmit: {
     marginBottom: 10,
   },
+  paper: {
+    width: '500px',  // 이 부분을 추가하세요
+    // 기타 스타일
+  }
 }));

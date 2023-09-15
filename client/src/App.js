@@ -24,15 +24,18 @@ const App = () => {
           Intents, Techniques, and Components: a Unified Analysis of Interaction Authoring Tasks in Data Visualization
         </Typography>
       </AppBar>
+      <div className='addExample button'>
+        <Form currentId={currentId} setCurrentId={setCurrentId} />
+      </div>
       <Grow in>
         <Container>
           <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
-            <Grid item xs={12} sm={7}>
+            {/* <Grid item xs={12} sm={7}> */}
               <Posts setCurrentId={setCurrentId} />
-            </Grid>
-            <Grid item xs={12} sm={4}>
+            {/* </Grid> */}
+            {/* <Grid item xs={12} sm={4}> */}
               <Form currentId={currentId} setCurrentId={setCurrentId} />
-            </Grid>
+            {/* </Grid> */}
           </Grid>
         </Container>
       </Grow>
