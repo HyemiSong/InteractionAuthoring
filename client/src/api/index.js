@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:1000/posts';
+const url = 'http://localhost:4000/posts';
 // const url = 'https://port-0-interactionauthoring-30yyr422almi9u466.sel5.cloudtype.app/posts';
 
 export const fetchPosts = () => axios.get(url);
