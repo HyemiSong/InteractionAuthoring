@@ -16,28 +16,29 @@ export default makeStyles((theme) => ({
   },
   font: {
     fontWeight: 100
-  },
-  unified: {
-    fontSize: 25,
-    color: 'grey',
-    paddingBottom: '5px',
-    paddingTop: '10px',
-    marginBottom: 30,
-    textAlign: 'center',
-    // fontFamily: "'Arial', 'Helvetica', sans-serif",  // 수정된 부분
+  // },
+  // unified: {
+  //   fontSize: 15,
+  //   color: 'grey',
+  //   paddingBottom: '5px',
+  //   paddingTop: '10px',
+  //   marginBottom: 30,
+  //   textAlign: 'left',
+  //   // fontFamily: "'Arial', 'Helvetica', sans-serif",  // 수정된 부분
   },
   intent: {
     fontSize: 15,
     marginTop: 5,
   },
   authintent: {
-    fontSize: 18,
-    lineHeight: 1.2
+    fontSize: 25,
+    lineHeight: 1.2,
+    textAlign: 'center',
     // textDecoration: 'underline',
   },
   userintent: {
     fontSize: 18,
-    marginBottom: 13
+    marginBottom: 13,
     // textDecoration: 'underline',
   },
   margin: {

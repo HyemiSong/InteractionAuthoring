@@ -28,6 +28,12 @@ const App = () => {
         This website enables individuals to collect interactive data visualization examples collaboratively. This collection will be the extension of examples utilized in our research paper for everyone interested in interaction authoring for data visualization. By selecting "Add an example", you can contribute examples based on our established framework, encompassing intent, technique, and component. Moreover, you can provide your analysis or description of the example.
          Please note that this project is ongoing, and we will continue to refine and enhance its features. Currently, the "Delete a post" function is not available. However, editing a previously uploaded post is permissible. If you need to delete a post or any requests, please don't hesitate to contact us.        </Typography>
         </div>
+
+        <div className={classes.unified}>
+          Unified Accounts (Intent-Technique-Component)
+          <div className={classes.intent}>INDEX: Authoring Intent [AI], User Intent [UI], Technique [TE], Component [CO]</div>
+        </div> 
+
       <div className='addExample button'>
         <Form currentId={currentId} setCurrentId={setCurrentId} />
       </div>

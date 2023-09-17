@@ -23,12 +23,19 @@ export default makeStyles(() => ({
     textAlign: 'left',
     fontSize: 15,
     lineHeight: 1.6,
-    width: '80%',
+    width: '90%',
   },
   image: {
     marginLeft: '15px',
   },
-  // margin: {
-  //   marginBottom: '15px'
-  // }
+  unified: {
+    fontSize: 15,
+    color: 'grey',
+    paddingBottom: '5px',
+    paddingTop: '10px',
+    marginBottom: 30,
+    textAlign: 'left',
+    lineHeight:  '1.5',
+    // fontFamily: "'Arial', 'Helvetica', sans-serif",  // 수정된 부분
+  }
 }));

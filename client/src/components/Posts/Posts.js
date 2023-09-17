@@ -31,10 +31,10 @@ const Posts = ({ setCurrentId }) => {
   return (
     !posts.length ? <CircularProgress /> : (
       <div className={classes.container}>
-        <div className={classes.unified}>
+        {/* <div className={classes.unified}>
           Unified Accounts (Intent-Technique-Component)
           <div className={classes.intent}>Authoring Intent [AI], User Intent [UI], Technique [TE], Component [CO]</div>
-        </div>
+        </div> */}
         {Object.keys(groupedByAuthIntent).map(authintent => {
           const groupedPosts = groupByIntent(groupedByAuthIntent[authintent]);
 

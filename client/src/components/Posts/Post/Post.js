@@ -37,9 +37,9 @@ const Post = ({ post, setCurrentId }) => {
             {/* <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography> */}
           </div>
           <div className={classes.overlay2}>
-          <Button size="small" color="default" style={{ color: 'black', backgroundColor: 'white', marginRight: '5px'}} onClick={() => dispatch(deletePost(post._id))}>
+          {/* <Button size="small" color="default" style={{ color: 'black', backgroundColor: 'white', marginRight: '5px'}} onClick={() => dispatch(deletePost(post._id))}>
             <DeleteIcon fontSize="small" /> Delete
-          </Button>
+          </Button> */}
           <IconButton size="small" color="default" style={{ color: 'black', backgroundColor: 'white', marginRight: '5px'}} onClick={() =>  setShowDetailModal(true)}>
             <MoreHorizIcon />
           </IconButton>
