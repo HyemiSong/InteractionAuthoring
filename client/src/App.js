@@ -25,8 +25,8 @@ const App = () => {
       </AppBar>
       <div>
         <Typography className={classes.intro} variant="h2" align="center">
-          this website Enumerating objects: 39, done. Counting objects: 100% (39/39), done. Delta compression using up to 10 threads Compressing objects: 100% (18/18), done. Writing objects: 100% (20/20), 9.25 KiB | 9.25 MiB/s, done. Total 20 (delta 9), reused 0 (delta 0), pack-reused 0 remote: Resolving deltas: 100% (9/9), completed with 9 local objects. remote: remote: GitHub found 10 vulnerabilities on 
-        </Typography>
+        This website enables individuals to collect interactive data visualization examples collaboratively. This collection will be the extension of examples utilized in our research paper for everyone interested in interaction authoring for data visualization. By selecting "Add an example", you can contribute examples based on our established framework, encompassing intent, technique, and component. Moreover, you can provide your analysis or description of the example.
+         Please note that this project is ongoing, and we will continue to refine and enhance its features. Currently, the "Delete a post" function is not available. However, editing a previously uploaded post is permissible. If you need to delete a post or any requests, please don't hesitate to contact us.        </Typography>
         </div>
       <div className='addExample button'>
         <Form currentId={currentId} setCurrentId={setCurrentId} />

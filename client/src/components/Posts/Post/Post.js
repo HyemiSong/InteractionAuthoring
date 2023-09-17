@@ -55,7 +55,9 @@ const Post = ({ post, setCurrentId }) => {
             <Typography className={classes.technique} gutterBottom variant="body2" component="h2">{'[TE] ' + post.technique}</Typography>
             <Typography className={classes.component} gutterBottom variant="body2" component="h2">{'[CO] ' + post.component.join(', ')}</Typography>
             {/* <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography> */}
-            <Typography variant="body2" color="textSecondary" component="p"><Link href={post.uri} target='_blank'>{post.uri}</Link></Typography>
+            <Typography variant="body2" color="textSecondary" component="p" style={{ width: '95%', overflowWrap: 'break-word' }}>
+                <Link href={post.uri} target='_blank'>{post.uri}</Link>
+            </Typography>
             {/* <Typography variant="body2" color="textSecondary" component="p">{post.creator}</Typography> */}
         </CardContent>
       </Card>

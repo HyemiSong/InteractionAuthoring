@@ -18,7 +18,7 @@ const Intents = {
 }
 
 const Components = 
-['Visual Object', 'Visual Channel', 'Data', 'Encoding', 'Scale', 
+['Mouse Coordinates', 'State Variables', 'Visual Object', 'Visual Channel', 'Data', 'Encoding', 'Scale', 
 'Event', 'Listener', 'Target', 'Hit Object',
 'Camera',
 'Predicate', 'Field Reference', 'Component Reference',
