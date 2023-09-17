@@ -44,6 +44,7 @@ const handleEditClick = () => {
 // console.log('post._id', post._id)
 
   return (
+    <div>
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
       <div className={classes.overlay}>
@@ -70,15 +71,19 @@ const handleEditClick = () => {
       </CardContent>
 
       {/* tags */}
-      <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
-      </div>
+        <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary" component="h2">
+                {Array.isArray(post.tags) ? post.tags.map((tag) => `#${tag} `) : ''}
+            </Typography>
+        </div>
 
       <CardActions className={classes.cardActions}>
         {/* <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button> */}
         <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}><DeleteIcon fontSize="small" /> Delete</Button>
       </CardActions>
     </Card>
+    {/* <div className={classes.margin}></div> */}
+    </div>
   );
 };
 

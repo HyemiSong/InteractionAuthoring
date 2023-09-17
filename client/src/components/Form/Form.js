@@ -14,12 +14,12 @@ const FormModal = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
   // const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
   const post = useSelector((state) => {
-    if (!Array.isArray(state.posts)) {
-      console.error('state.posts is not an array:', state.posts);
+    if (!Array.isArray(state.posts.posts)) {
+      console.error('state.posts.posts is not an array:', state.posts.posts);
       return null;
     }
-    return currentId ? state.posts.find((message) => message._id === currentId) : null;
-  });  
+    return currentId ? state.posts.posts.find((message) => message._id === currentId) : null;
+  });   
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -35,6 +35,9 @@ const FormModal = ({ currentId, setCurrentId }) => {
 
   const entireState = useSelector((state) => state);
 console.log(entireState);
+console.log(currentId);
+console.log("Selected post data:", post);
+console.log("Post data for the modal:", postData);
 
   useEffect(() => {
     setOpen(isOpenFromRedux); // Redux 상태가 변경될 때마다 로컬 상태를 업데이트
@@ -52,6 +55,7 @@ const handleOpen = () => {
 // 모달 닫기 함수
 const handleClose = () => {
   // setOpen(false);
+  clear();
   dispatch(toggleIsOpen(false)); // 모달을 닫기 위해 false를 설정
 };
 
@@ -105,8 +109,8 @@ const handleSubmit = async (e) => {
   return (
     <div>
       {/* <Post setOpenModal={handleOpen} /> */}
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
-        Add card
+      <Button variant="outlined" color="primary" onClick={handleOpen} className={classes.customButton}>
+        Add an example
       </Button>
 
       <Modal
