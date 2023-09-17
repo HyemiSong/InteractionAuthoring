@@ -6,7 +6,8 @@ import Post from './Post/Post';
 import useStyles from './styles';
 
 const Posts = ({ setCurrentId }) => {
-  const posts = useSelector((state) => state.posts);
+  // const posts = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.posts.posts);
   const classes = useStyles();
 
   const groupByIntent = (posts) => {

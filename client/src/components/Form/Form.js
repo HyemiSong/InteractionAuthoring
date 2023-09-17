@@ -1,29 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import {IconButton, TextField, Button, Typography, Paper, Modal } from '@material-ui/core';
+import { IconButton, TextField, Button, Typography, Paper, Modal } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
-import { createPost, updatePost } from '../../actions/posts';
+import { createPost, updatePost, toggleIsOpen } from '../../actions/posts';
 import { AuthIntents, Intents, Components } from '../../constants/framework';
+import Post from '../Posts/Post/Post';
 
 const FormModal = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
-  const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
+  // const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
+  const post = useSelector((state) => {
+    if (!Array.isArray(state.posts)) {
+      console.error('state.posts is not an array:', state.posts);
+      return null;
+    }
+    return currentId ? state.posts.find((message) => message._id === currentId) : null;
+  });  
   const dispatch = useDispatch();
   const classes = useStyles();
-  
+
   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
   const [availableIntents, setAvailableIntents] = useState([]);
   const [availableTechniques, setAvailableTechniques] = useState([]);
-  const [open, setOpen] = useState(false);  // 추가
+
+  // useSelector를 사용해 isOpen 상태를 가져옵니다.
+  // const isOpenFromRedux = useSelector((state) => state.posts.some((post) => post.isOpen));
+  const isOpenFromRedux = useSelector((state) => state.posts.isOpen);
   
-  const handleClose = () => {  // 추가
-    setOpen(false);
-  };
-  
+  const [open, setOpen] = useState(isOpenFromRedux);
+
+  const entireState = useSelector((state) => state);
+console.log(entireState);
+
+  useEffect(() => {
+    setOpen(isOpenFromRedux); // Redux 상태가 변경될 때마다 로컬 상태를 업데이트
+  }, [isOpenFromRedux]);
+
+  console.log('isOpen', isOpenFromRedux)
+  console.log('Open', open)
+
+// 모달 열기 함수
+const handleOpen = () => {
+  // setOpen(true);
+  dispatch(toggleIsOpen(true)); // 모달을 열기 위해 true를 설정
+};
+
+// 모달 닫기 함수
+const handleClose = () => {
+  // setOpen(false);
+  dispatch(toggleIsOpen(false)); // 모달을 닫기 위해 false를 설정
+};
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (currentId === 0) {
+      dispatch(createPost(postData));
+    } else {
+      dispatch(updatePost(currentId, postData));
+    }
+    clear();
+    handleClose(); // 폼 제출 후 모달을 닫습니다.
+};
+
+  // useEffect(() => {
+  //   if (post) {
+  //     // post의 isOpen 상태를 확인하여 모달 열기/닫기 상태를 설정
+  //     setOpen(post.isOpen); // isOpen이 true인 경우 모달을 열도록 설정
+  //   }
+  // }, [post]);
+
+  // Group
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
@@ -52,26 +102,15 @@ const FormModal = ({ currentId, setCurrentId }) => {
     setPostData({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (currentId === 0) {
-      dispatch(createPost(postData));
-    } else {
-      dispatch(updatePost(currentId, postData));
-    }
-    clear();
-    handleClose();
-  };
-
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
-        Add Post
+      {/* <Post setOpenModal={handleOpen} /> */}
+      <Button variant="outlined" color="primary" onClick={handleOpen}>
+        Add card
       </Button>
 
       <Modal
-        open={open}
+        open={isOpenFromRedux}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -81,66 +120,259 @@ const FormModal = ({ currentId, setCurrentId }) => {
           justifyContent: 'center'
         }}
       >
-      <Paper className={classes.paper}>
-        <IconButton 
-          edge="end" 
-          color="inherit" 
-          onClick={handleClose} 
-          aria-label="close"
-          style={{ position: 'absolute', top: '10px', right: '10px' }}  // 버튼 위치 조절
-        >
-          <CloseIcon />
-        </IconButton>
+        <Paper className={classes.paper}>
+          {/* <IconButton
+            edge="end"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+            style={{ position: 'absolute', top: '10px', right: '10px' }}
+          >
+            <CloseIcon />
+          </IconButton> */}
 
-        <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-          <Typography variant="h6">{currentId ? `Editing ${post.creator}'s post` : 'Adding an example'}</Typography>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Authoring Intent</InputLabel>
-            <Select value={postData.authintent} onChange={(e) => setPostData({ ...postData, authintent: e.target.value })}>
-              {Object.keys(AuthIntents).map((authintent) => (
-                <MenuItem key={authintent} value={authintent}>{authintent}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>User Intent</InputLabel>
-            <Select value={postData.intent} onChange={(e) => setPostData({ ...postData, intent: e.target.value })}>
-              {availableIntents.map((intent) => (
-                <MenuItem key={intent} value={intent}>{intent}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Technique</InputLabel>
-            <Select value={postData.technique} onChange={(e) => setPostData({ ...postData, technique: e.target.value })}>
-              {availableTechniques.map((technique) => (
-                <MenuItem key={technique} value={technique}>{technique}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Component</InputLabel>
-            <Select multiple value={postData.component} onChange={(e) => setPostData({ ...postData, component: e.target.value })}>
-              {Components.map((component) => (
-                <MenuItem key={component} value={component}>{component}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
-          <TextField name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
-          <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} />
-          <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
-          <div className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} /></div>
-          <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth disabled={isSubmitDisabled}>Submit</Button>
-          <Button variant="contained" style={{backgroundColor: '#000', color: '#fff'}} size="small" onClick={clear} fullWidth>Clear</Button>
-        </form>
-      </Paper>
-    </Modal>
+          <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+          <Typography variant="h6">{currentId && post ? `Editing ${post.creator}'s post` : 'Adding an example'}</Typography>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel>Authoring Intent</InputLabel>
+              <Select value={postData.authintent} onChange={(e) => setPostData({ ...postData, authintent: e.target.value })}>
+                {Object.keys(AuthIntents).map((authintent) => (
+                  <MenuItem key={authintent} value={authintent}>
+                    {authintent}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel>User Intent</InputLabel>
+              <Select value={postData.intent} onChange={(e) => setPostData({ ...postData, intent: e.target.value })}>
+                {availableIntents.map((intent) => (
+                  <MenuItem key={intent} value={intent}>
+                    {intent}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel>Technique</InputLabel>
+              <Select value={postData.technique} onChange={(e) => setPostData({ ...postData, technique: e.target.value })}>
+                {availableTechniques.map((technique) => (
+                  <MenuItem key={technique} value={technique}>
+                    {technique}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel>Component</InputLabel>
+              <Select multiple value={postData.component} onChange={(e) => setPostData({ ...postData, component: e.target.value })}>
+                {Components.map((component) => (
+                  <MenuItem key={component} value={component}>
+                    {component}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+            <TextField name="tags" variant="outlined" label="Tags (comma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+            <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} />
+            <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
+            <div className={classes.fileInput}>
+              <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
+            </div>
+            <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth disabled={isSubmitDisabled}>
+              Submit
+            </Button>
+            <Button variant="contained" style={{ backgroundColor: '#000', color: '#fff' }} size="small" onClick={clear} fullWidth>
+              Clear
+            </Button>
+          </form>
+        </Paper>
+      </Modal>
     </div>
   );
 };
 
 export default FormModal;
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import {IconButton, TextField, Button, Typography, Paper, Modal } from '@material-ui/core';
+// import CloseIcon from '@material-ui/icons/Close';
+// import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
+// import { useDispatch, useSelector } from 'react-redux';
+// import FileBase from 'react-file-base64';
+
+// import useStyles from './styles';
+// import { createPost, updatePost } from '../../actions/posts';
+// import { AuthIntents, Intents, Components } from '../../constants/framework';
+// import Post from '../Posts/Post/Post';
+
+// const FormModal = ({ currentId, setCurrentId }) => {
+//   // console.log("FormModal is being rendered!");
+
+//   const [postData, setPostData] = useState({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
+//   const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
+//   const dispatch = useDispatch();
+//   const classes = useStyles();
+  
+//   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
+//   const [availableIntents, setAvailableIntents] = useState([]);
+//   const [availableTechniques, setAvailableTechniques] = useState([]);
+//   const [open, setOpen] = useState(false);
+//   const setOpenModal = setOpen;
+
+//   console.log("setOpenModal function in FormModal:", setOpenModal);
+
+//   const [receivedData, setReceivedData] = useState(null);
+
+//   useEffect(() => {
+//     console.log("Modal open state:", open);
+// }, [open]);
+
+//   const handleDataFromPost = (dataFromPost) => {
+//       setReceivedData(dataFromPost);
+//       // console.log("Data received from Post:", dataFromPost);
+//   };
+//     useEffect(() => {
+//       console.log(receivedData);
+//   }, [receivedData]);
+
+
+//   const handleClose = () => {  // 추가
+//     setOpen(false);
+//   };
+  
+//   useEffect(() => {
+//     if (post) setPostData(post);
+//   }, [post]);
+
+//   useEffect(() => {
+//     if (postData.authintent in AuthIntents) {
+//       setAvailableIntents(AuthIntents[postData.authintent]);
+//     } else {
+//       setAvailableIntents([]);
+//     }
+
+//     if (postData.intent in Intents) {
+//       setAvailableTechniques(Intents[postData.intent]);
+//     } else {
+//       setAvailableTechniques([]);
+//     }
+//   }, [postData.authintent, postData.intent]);
+
+//   useEffect(() => {
+//     const areRequiredFieldsFilled = postData.authintent && postData.intent && postData.technique && postData.component.length > 0;
+//     setSubmitDisabled(!areRequiredFieldsFilled);
+//   }, [postData.authintent, postData.intent, postData.technique, postData.component]);
+
+//   const clear = () => {
+//     setCurrentId(0);
+//     setPostData({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (currentId === 0) {
+//       dispatch(createPost(postData));
+//     } else {
+//       dispatch(updatePost(currentId, postData));
+//     }
+//     clear();
+//     handleClose();
+//   };
+//   // // sendDataToParent 함수 호출
+//   // sendDataToParent({ someData: 'Hello from Post' });
+
+//   // setOpenModal 함수 호출
+//   // setOpenModal();
+//   // console.log('setOpenModal:', setOpenModal);
+
+//   return (
+//     <div>
+//       {/* <Post sendDataToParent={handleDataFromPost} setOpenModal={() => setOpen(true)} /> */}
+//       <Post setOpenModal={setOpen} />
+
+//       <Button variant="outlined" color="primary" onClick={() => {
+//         setOpen(true); 
+//         clear();
+//       }}>
+//         Add Post
+//       </Button>
+
+//       <Modal
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="simple-modal-title"
+//         aria-describedby="simple-modal-description"
+//         style={{
+//           display: 'flex',
+//           alignItems: 'center',
+//           justifyContent: 'center'
+//         }}
+//       >
+//       <Paper className={classes.paper}>
+//         <IconButton 
+//           edge="end" 
+//           color="inherit" 
+//           onClick={handleClose} 
+//           aria-label="close"
+//           style={{ position: 'absolute', top: '10px', right: '10px' }}  // 버튼 위치 조절
+//         >
+//           <CloseIcon />
+//         </IconButton>
+
+//         <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+//           <Typography variant="h6">{currentId ? `Editing ${post.creator}'s post` : 'Adding an example'}</Typography>
+//           <FormControl variant="outlined" fullWidth>
+//             <InputLabel>Authoring Intent</InputLabel>
+//             <Select value={postData.authintent} onChange={(e) => setPostData({ ...postData, authintent: e.target.value })}>
+//               {Object.keys(AuthIntents).map((authintent) => (
+//                 <MenuItem key={authintent} value={authintent}>{authintent}</MenuItem>
+//               ))}
+//             </Select>
+//           </FormControl>
+//           <FormControl variant="outlined" fullWidth>
+//             <InputLabel>User Intent</InputLabel>
+//             <Select value={postData.intent} onChange={(e) => setPostData({ ...postData, intent: e.target.value })}>
+//               {availableIntents.map((intent) => (
+//                 <MenuItem key={intent} value={intent}>{intent}</MenuItem>
+//               ))}
+//             </Select>
+//           </FormControl>
+//           <FormControl variant="outlined" fullWidth>
+//             <InputLabel>Technique</InputLabel>
+//             <Select value={postData.technique} onChange={(e) => setPostData({ ...postData, technique: e.target.value })}>
+//               {availableTechniques.map((technique) => (
+//                 <MenuItem key={technique} value={technique}>{technique}</MenuItem>
+//               ))}
+//             </Select>
+//           </FormControl>
+//           <FormControl variant="outlined" fullWidth>
+//             <InputLabel>Component</InputLabel>
+//             <Select multiple value={postData.component} onChange={(e) => setPostData({ ...postData, component: e.target.value })}>
+//               {Components.map((component) => (
+//                 <MenuItem key={component} value={component}>{component}</MenuItem>
+//               ))}
+//             </Select>
+//           </FormControl>
+//           <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+//           <TextField name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+//           <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} />
+//           <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
+//           <div className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} /></div>
+//           <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth disabled={isSubmitDisabled}>Submit</Button>
+//           <Button variant="contained" style={{backgroundColor: '#000', color: '#fff'}} size="small" onClick={clear} fullWidth>Clear</Button>
+//         </form>
+//       </Paper>
+//     </Modal>
+//     </div>
+//   );
+// };
+
+// export default FormModal;
+
 
 
 // import React, { useState, useEffect } from 'react';

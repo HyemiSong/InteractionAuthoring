@@ -1,10 +1,11 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, TOGGLE_ISOPEN } from '../constants/actionTypes';
 
 import * as api from '../api/index.js';
 
 export const getPosts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchPosts();
+    console.log("Fetched posts:", data);  // 로그 추가
 
     dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
@@ -50,4 +51,8 @@ export const deletePost = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const toggleIsOpen = (isOpen) => (dispatch) => {
+  dispatch({ type: TOGGLE_ISOPEN, payload: isOpen });
 };
