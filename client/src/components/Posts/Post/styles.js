@@ -5,10 +5,16 @@ export default makeStyles({
     borderRadius: '0px'
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%',
+
+    width: '100%', // This ensures the image takes up the full width of its container.
+    height: 'auto', // This allows the image height to adjust based on its aspect ratio.
+    paddingTop: '56.25%', // 16:9 aspect ratio
+    backgroundSize: 'contain', // 이 부분은 이미지가 컨테이너에 맞게 조정되도록 합니다.
+    backgroundRepeat: 'no-repeat', // 배경 이미지가 반복되지 않도록 합니다.
+    backgroundPosition: 'center', // 이미지가 중앙에 위치하도록 합니다.
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     backgroundBlendMode: 'darken',
+    backgroundSize: 'cover', // This ensures the image covers the entire area of the container.
   },
   border: {
     border: 'solid',
@@ -60,11 +66,17 @@ export default makeStyles({
     maxHeight: '90%',
     overflowY: 'auto',
   },
+  // largeMedia: {
+  //   height: 0,
+  //   paddingTop: '56.25%', // 16:9
+  //   // 여기에 추가적인 스타일을 적용하면 됩니다.
+  // },
   largeMedia: {
-    height: 0,
     paddingTop: '56.25%', // 16:9
-    // 여기에 추가적인 스타일을 적용하면 됩니다.
-  },
+    width: '100%', // This ensures the image takes up the full width of its container.
+    height: 'auto', // This allows the image height to adjust based on its aspect ratio.
+    backgroundSize: 'cover', // This ensures the image covers the entire area of the container.
+  },  
   message: {
     fontSize: '14px',
     lineHeight: '2',
