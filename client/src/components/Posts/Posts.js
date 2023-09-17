@@ -31,16 +31,19 @@ const Posts = ({ setCurrentId }) => {
   return (
     !posts.length ? <CircularProgress /> : (
       <div className={classes.container}>
-        <div className={classes.intent}>Authoring Intent [AI], User Intent [UI]</div>
+        <div className={classes.unified}>
+          Unified Accounts (Intent-Technique-Component)
+          <div className={classes.intent}>Authoring Intent [AI], User Intent [UI], Technique [TE], Component [CO]</div>
+        </div>
         {Object.keys(groupedByAuthIntent).map(authintent => {
           const groupedPosts = groupByIntent(groupedByAuthIntent[authintent]);
 
           return (
             <div key={authintent}>
-              <Typography className={classes.authintent} gutterBottom color="textPrimary" style={{ color: '#FFFFFF' }}> {'/ ' + authintent + ' [AI]'}</Typography>
+              <Typography className={classes.authintent} gutterBottom color="textPrimary" style={{ color: '#FFFFFF' }}> {'[AI] ' + authintent}</Typography>
               {Object.keys(groupedPosts).map(intent => (
                 <div key={intent}>
-                  <Typography className={classes.userintent} gutterBottom color="textPrimary" style={{ color: '#FFFFFF' }}>{'// ' + intent + ' [UI]'}</Typography>
+                  <Typography className={classes.userintent} gutterBottom color="textPrimary" style={{ color: '#FFFFFF' }}>{'[UI] ' + intent}</Typography>
                   <Grid container alignItems="stretch" spacing={3}>
                     {groupedPosts[intent].map((post) => (
                       <Grid key={post._id} item xs={12} sm={3}>

@@ -97,10 +97,10 @@ const handleSubmit = async (e) => {
   }, [postData.authintent, postData.intent]);
 
   useEffect(() => {
-    const areRequiredFieldsFilled = postData.authintent && postData.intent && postData.technique && postData.component.length > 0;
+    const areRequiredFieldsFilled = postData.authintent && postData.intent && postData.technique && postData.component.length > 0 && postData.message && postData.uri;
     setSubmitDisabled(!areRequiredFieldsFilled);
-  }, [postData.authintent, postData.intent, postData.technique, postData.component]);
-
+  }, [postData.authintent, postData.intent, postData.technique, postData.component, postData.message, postData.uri]);
+  
   const clear = () => {
     setCurrentId(0);
     setPostData({ authintent: '', intent: '', technique: '', component: [], message: '', tags: '', selectedFile: '', uri: '', creator: '' });
@@ -177,10 +177,10 @@ const handleSubmit = async (e) => {
                 ))}
               </Select>
             </FormControl>
-            <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
-            <TextField name="tags" variant="outlined" label="Tags (comma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
-            <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} />
-            <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
+            <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} required />
+            <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} required />            
+            {/* <TextField name="tags" variant="outlined" label="Tags (comma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} /> */}
+            {/* <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} /> */}
             <div className={classes.fileInput}>
               <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
             </div>

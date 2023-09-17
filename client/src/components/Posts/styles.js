@@ -17,13 +17,18 @@ export default makeStyles((theme) => ({
   font: {
     fontWeight: 100
   },
-  intent: {
-    fontSize: 14,
+  unified: {
+    fontSize: 25,
     color: 'grey',
     paddingBottom: '5px',
     paddingTop: '10px',
-    marginBottom: 5,
-    fontFamily: "'Arial', 'Helvetica', sans-serif",  // 수정된 부분
+    marginBottom: 30,
+    textAlign: 'center',
+    // fontFamily: "'Arial', 'Helvetica', sans-serif",  // 수정된 부분
+  },
+  intent: {
+    fontSize: 15,
+    marginTop: 5,
   },
   authintent: {
     fontSize: 18,

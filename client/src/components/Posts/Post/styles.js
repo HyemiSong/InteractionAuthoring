@@ -20,8 +20,8 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderRadius: '0px',
-    height: '450px',
+    borderRadius: '5px',
+    height: '300px',
     position: 'relative',
   },
   overlay: {
@@ -52,4 +52,38 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  largeModalCard: {
+    width: '70%',
+    position: 'relative',
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+    maxHeight: '90%',
+    overflowY: 'auto',
+  },
+  largeMedia: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+    // 여기에 추가적인 스타일을 적용하면 됩니다.
+  },
+  message: {
+    fontSize: '14px',
+    lineHeight: '2',
+    fontWeight: '400',
+  },
+  apple: {
+    marginTop: '20px',
+    textAlign: 'center',
+}
+  // closeButton: {
+  //   position: 'fixed',
+  //   top: '10px',
+  //   right: '10px',
+  //   backgroundColor: 'black',
+  //   color: 'white',
+  //   padding: '10px',
+  //   '&:hover': {
+  //       backgroundColor: '#333',
+  //   },
+  //   zIndex: 1500 
+  // },
 });
