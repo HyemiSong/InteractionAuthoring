@@ -40,5 +40,14 @@ export default makeStyles((theme) => ({
     paddingLeft: '40px',
     float: 'right',
     borderRadius: '100px'
+  },
+  marginTop: {
+    marginTop:'10px',
+  },
+  message: {
+    '&.MuiFormControl-fullWidth': {
+      margin: 0,
+      marginTop:'10px',
+    },
   }
 }));

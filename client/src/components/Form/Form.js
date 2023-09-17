@@ -137,7 +137,7 @@ const handleSubmit = async (e) => {
 
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
           <Typography variant="h6">{currentId && post ? `Editing ${post.creator}'s post` : 'Adding an example'}</Typography>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl className={classes.marginTop} variant="outlined" fullWidth required>
               <InputLabel>Authoring Intent</InputLabel>
               <Select value={postData.authintent} onChange={(e) => setPostData({ ...postData, authintent: e.target.value })}>
                 {Object.keys(AuthIntents).map((authintent) => (
@@ -147,7 +147,7 @@ const handleSubmit = async (e) => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl className={classes.marginTop} variant="outlined" fullWidth required>
               <InputLabel>User Intent</InputLabel>
               <Select value={postData.intent} onChange={(e) => setPostData({ ...postData, intent: e.target.value })}>
                 {availableIntents.map((intent) => (
@@ -157,7 +157,7 @@ const handleSubmit = async (e) => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl className={classes.marginTop} variant="outlined" fullWidth required>
               <InputLabel>Technique</InputLabel>
               <Select value={postData.technique} onChange={(e) => setPostData({ ...postData, technique: e.target.value })}>
                 {availableTechniques.map((technique) => (
@@ -167,8 +167,8 @@ const handleSubmit = async (e) => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel>Component</InputLabel>
+            <FormControl className={classes.marginTop} variant="outlined" fullWidth required>
+              <InputLabel>Component(s)</InputLabel>
               <Select multiple value={postData.component} onChange={(e) => setPostData({ ...postData, component: e.target.value })}>
                 {Components.map((component) => (
                   <MenuItem key={component} value={component}>
@@ -176,9 +176,9 @@ const handleSubmit = async (e) => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
-            <TextField name="message" variant="outlined" label="Message" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} required />
-            <TextField name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} required />            
+            </FormControl >
+            <TextField className={classes.message} name="message" variant="outlined" label="Analysis & Description" fullWidth multiline minRows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} required />
+            <TextField className={classes.message} name="uri" variant="outlined" label="Add example website" fullWidth value={postData.uri} onChange={(e) => setPostData({ ...postData, uri: e.target.value })} required />            
             {/* <TextField name="tags" variant="outlined" label="Tags (comma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} /> */}
             {/* <TextField name="creator" variant="outlined" label="Add your nickname" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} /> */}
             <div className={classes.fileInput}>
@@ -187,7 +187,7 @@ const handleSubmit = async (e) => {
             <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth disabled={isSubmitDisabled}>
               Submit
             </Button>
-            <Button variant="contained" style={{ backgroundColor: '#000', color: '#fff' }} size="small" onClick={clear} fullWidth>
+            <Button variant="contained" style={{ backgroundColor: '#000', color: '#fff' }} size="large" onClick={clear} fullWidth>
               Clear
             </Button>
           </form>
