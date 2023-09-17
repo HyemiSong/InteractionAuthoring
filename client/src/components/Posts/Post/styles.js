@@ -19,7 +19,7 @@ export default makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     borderRadius: '5px',
     height: '300px',
     position: 'relative',
@@ -71,7 +71,7 @@ export default makeStyles({
     fontWeight: '400',
   },
   apple: {
-    marginTop: '20px',
+    marginTop: '10px',
     textAlign: 'center',
 }
   // closeButton: {

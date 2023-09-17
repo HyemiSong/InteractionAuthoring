@@ -37,6 +37,9 @@ const Post = ({ post, setCurrentId }) => {
             {/* <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography> */}
           </div>
           <div className={classes.overlay2}>
+          <Button size="small" color="default" style={{ color: 'black', backgroundColor: 'white', marginRight: '5px'}} onClick={() => dispatch(deletePost(post._id))}>
+            <DeleteIcon fontSize="small" /> Delete
+          </Button>
           <IconButton size="small" color="default" style={{ color: 'black', backgroundColor: 'white', marginRight: '5px'}} onClick={() =>  setShowDetailModal(true)}>
             <MoreHorizIcon />
           </IconButton>
@@ -55,12 +58,6 @@ const Post = ({ post, setCurrentId }) => {
             <Typography variant="body2" color="textSecondary" component="p"><Link href={post.uri} target='_blank'>{post.uri}</Link></Typography>
             {/* <Typography variant="body2" color="textSecondary" component="p">{post.creator}</Typography> */}
         </CardContent>
-{/* 
-        <CardActions className={classes.cardActions}>
-          <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
-            <DeleteIcon fontSize="small" /> Delete
-          </Button>
-        </CardActions> */}
       </Card>
 
     {/* 상세 정보 모달 */}
